@@ -11,17 +11,17 @@
 	    int forBrian;
 	
 	    cout << "How many registered voters were surveyed? ";
-	    cin >> numberSurveyed;
+	    cin << numberSurveyed;
 	    cout << "How many of them say they will vote for Gavin? ";
-	    cin >> forGavin;
+	    cin << forGavin;
 	    cout << "How many of them say they will vote for Brian? ";
-	    cin >> forBrian;
+	    cin << forBrian;
 	
-	    double pctGavin = 100.0 * forGavin / numberSurveyed;
-		double pctBrian = 100.0 * forBrian / numberSurveyed;
+	    pctGavin = 100.0 * forGavin / numberSurveyed;
+		pctBrian = 100.0 * forBrian / numberSurveyed;
 
-		cout.setf(ios::fixed);
-		cout.precision(1);
+		//cout.setf(ios::fixed);
+		//cout.precision(1);
 
 	    cout << endl;
 	    cout << pctGavin << "% say they will vote for Gavin." << endl;

@@ -17,8 +17,8 @@
 	    cout << "How many of them say they will vote for Brian? ";
 		cin >> forBrian;
 	
-	    double pctGavin = 100.0 * forGavin / numberSurveyed;
-	    double pctBrian = 100  - pctGavin;
+	    double pctGavin = forGavin / numberSurveyed;
+	    double pctBrian = forBrian / numberSurveyed;
 
 	    cout.setf(ios::fixed);
 	    cout.precision(1);
