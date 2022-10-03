@@ -3,5 +3,9 @@
 
 	int main()
 	{
-	    cout << "Hey, this really works!" << endl;
+		int a = 1;
+	  for (int i = 1; i <= 5; ++i){
+		cout << i;
+
+	  }
 	}
