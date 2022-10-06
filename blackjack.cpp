@@ -9,10 +9,9 @@
 using namespace std;
 
 vector<string> cardList{"placeholder"}; // list of cards with placeholder at index 0
-vector<string> playerCardList{};
-vector<string> dealerCardList{};
 int playerAceElevenCounter = 0;
 int dealerAceElevenCounter = 0;
+string PlayerDecision = "h";
 
 void ListOfCards()
 // function for creating a list of cards
@@ -78,19 +77,30 @@ int AssignValue(string selectedCard) // function for assigning blackjack value t
     return cardValue;
 }
 
-int DetermineAceValue(int currentHandValue, int aceElevenCounter)
+vector<int> DetermineAceValue(int currentHandValue, int aceElevenCounter)
 {
-    if (currentHandValue <= 21)
+    if (aceElevenCounter < 1)
     {
         currentHandValue = currentHandValue;
     }
-    else
+    else if (aceElevenCounter > 0 && currentHandValue > 21)
     {
         currentHandValue = currentHandValue - 10;
+        aceElevenCounter--;
     }
-    aceElevenCounter++;
-    return aceElevenCounter;
-    return currentHandValue;
+    vector<int> handEleven{currentHandValue, aceElevenCounter};
+    return handEleven;
+}
+
+vector<int> Bust(int currentHandValue, int aceElevenCounter)
+{
+    if (aceElevenCounter > 0)
+    {
+        currentHandValue = currentHandValue - 10;
+        aceElevenCounter--;
+    }
+    vector<int> handEleven{currentHandValue, aceElevenCounter};
+    return handEleven;
 }
 
 int DealerProtocol(int dealerFirstTwo)
@@ -100,63 +110,190 @@ int DealerProtocol(int dealerFirstTwo)
     while (dealerHandValue < 17)
     {
         string newDealerCard = CardSelection();
-        dealerCardList.push_back(newDealerCard);
-        cout << "dealer pulled: " << newDealerCard << endl;
+        cout << "The dealer drew " << newDealerCard << "." << endl;
         dealerHandValue = dealerHandValue + AssignValue(newDealerCard);
-        // dealerHandValue = dealerHandValue + AssignValue(CardSelection());
+
+        if (AssignValue(newDealerCard) == 11)
+        {
+            dealerAceElevenCounter++;
+
+            vector<int> tempDealer = DetermineAceValue(dealerHandValue, dealerAceElevenCounter);
+            dealerHandValue = tempDealer.at(0);
+            dealerAceElevenCounter = tempDealer.at(1);
+        }
+        if (dealerHandValue > 21 && dealerAceElevenCounter > 0)
+        {
+            vector<int> tempBustDealer = Bust(dealerHandValue, dealerAceElevenCounter);
+
+            dealerHandValue = tempBustDealer.at(0);
+            dealerAceElevenCounter = tempBustDealer.at(1);
+        }
+
+        if (dealerHandValue > 17)
+        {
+            break;
+        }
     }
     return dealerHandValue;
 }
 
-int Blackjack(string chosenCard, int currentHandValue, int aceElevenCounter)
+int PlayerProtocol(int playerFirstTwo)
 {
-    int chosenCardValue = AssignValue(chosenCard);
-    if (chosenCardValue == 11)
+    int playerHandValue;
+    playerHandValue = playerFirstTwo;
+    while (playerHandValue < 21)
     {
-        chosenCardValue = DetermineAceValue(currentHandValue, aceElevenCounter);
+        cout << "Do you want to hit or stand? (Type 'h' to hit, 's' to stand)" << endl;
+        cin >> PlayerDecision;
+        if (PlayerDecision == "h")
+        {
+            string newPlayerCard = CardSelection();
+            cout << "Your card is " << newPlayerCard << "." << endl;
+            playerHandValue = playerHandValue + AssignValue(newPlayerCard);
+
+            if (AssignValue(newPlayerCard) == 11)
+            {
+                playerAceElevenCounter++;
+
+                vector<int> tempPlayer = DetermineAceValue(playerHandValue, playerAceElevenCounter);
+                playerHandValue = tempPlayer.at(0);
+                playerAceElevenCounter = tempPlayer.at(1);
+            }
+            if (playerHandValue > 21 && playerAceElevenCounter > 0)
+            {
+                vector<int> tempBustPlayer = Bust(playerHandValue, playerAceElevenCounter);
+
+                playerHandValue = tempBustPlayer.at(0);
+                playerAceElevenCounter = tempBustPlayer.at(1);
+            }
+        }
+        if (PlayerDecision == "s" || (playerHandValue >= 21 && playerAceElevenCounter < 1) || playerHandValue == 21)
+        {
+            break;
+        }
     }
-    int handValue = currentHandValue + chosenCardValue;
-    return handValue;
+    return playerHandValue;
+}
+
+void Winner(int dealerFinalValue, int playerFinalValue)
+{
+    if (playerFinalValue > 21)
+    {
+        cout << "You lose..." << endl;
+    }
+    else if (dealerFinalValue == playerFinalValue)
+    {
+        cout << "You tied." << endl;
+    }
+    else if (dealerFinalValue > 21 && playerFinalValue <= 21)
+    {
+        cout << "You win!" << endl;
+    }
+    else if (dealerFinalValue > playerFinalValue)
+    {
+        cout << "You lose..." << endl;
+    }
 }
 
 int main()
 {
     ListOfCards();
-    // string card = CardSelection();
-    // cout << card;
-    //  cout << CardSelection();
-
-    // cout << AssignValue(card);
 
     string playerFirstCard = CardSelection();
 
-    cout << "Your first card is " << playerFirstCard << ".\n";
-    string dealerFirstCard = CardSelection();
-    cout << "The dealer's first card is " << dealerFirstCard << ".\n";
-    string playerSecondCard = CardSelection();
-    cout << "Your second card is " << playerSecondCard << ".\n";
-    string dealerSecondCard = CardSelection();
-    cout << "The dealer's second card is " << dealerSecondCard << ".\n";
+    /*int p1card;
+    cout << "enter player first card: " << p1card << endl;
+    cin >> p1card;
+    string playerFirstCard = cardList.at(p1card);
+    cout << playerFirstCard << endl;*/
 
-    dealerCardList.push_back(dealerFirstCard);
-    dealerCardList.push_back(dealerSecondCard);
-    playerCardList.push_back(playerFirstCard);
-    playerCardList.push_back(playerSecondCard);
+    cout << "Your first card is " << playerFirstCard << ".\n";
+
+    string dealerFirstCard = CardSelection();
+
+    /*int d1card;
+    cout << "enter dealer first card: " << d1card << endl;
+    cin >> d1card;
+
+    string dealerFirstCard = cardList.at(d1card);
+    cout << dealerFirstCard << endl;*/
+
+    cout << "The dealer's first card is " << dealerFirstCard << ".\n";
+
+    string playerSecondCard = CardSelection();
+
+    /*int p2card;
+    cout << "enter player second card: " << p2card << endl;
+    cin >> p2card;
+    string playerSecondCard = cardList.at(p2card);
+    cout << playerSecondCard << endl;*/
+
+    cout << "Your second card is " << playerSecondCard << ".\n";
+
+    string dealerSecondCard = CardSelection();
+
+    /*int d2card;
+    cout << "enter dealer second card: " << d2card << endl;
+    cin >> d2card;
+
+    string dealerSecondCard = cardList.at(d2card);
+    cout << dealerSecondCard << endl;*/
 
     int dealerHandValue = AssignValue(dealerFirstCard) + AssignValue(dealerSecondCard);
     int playerHandValue = AssignValue(playerFirstCard) + AssignValue(playerSecondCard);
-    cout << "player: " << playerHandValue << ", dealer: " << dealerHandValue << endl;
 
-    int finalDealerValue = DealerProtocol(dealerHandValue);
-
-    cout << "final dealer value: " << finalDealerValue << endl;
-
-    for (int i = 0; i < playerCardList.size(); i++) // print player card list test
+    if (AssignValue(dealerFirstCard) == 11)
     {
-        cout << playerCardList.at(i) << endl;
+        dealerAceElevenCounter++;
+        vector<int> tempD1 = DetermineAceValue(dealerHandValue, dealerAceElevenCounter);
+        dealerHandValue = tempD1.at(0);
+        dealerAceElevenCounter = tempD1.at(1);
     }
-    for (int i = 0; i < dealerCardList.size(); i++) // print dealer card list test
+    if (AssignValue(dealerSecondCard) == 11)
     {
-        cout << dealerCardList.at(i) << endl;
+        dealerAceElevenCounter++;
+        vector<int> tempD2 = DetermineAceValue(dealerHandValue, dealerAceElevenCounter);
+        dealerHandValue = tempD2.at(0);
+        dealerAceElevenCounter = tempD2.at(1);
     }
+    if (AssignValue(playerFirstCard) == 11)
+    {
+        playerAceElevenCounter++;
+        vector<int> tempP1 = DetermineAceValue(playerHandValue, playerAceElevenCounter);
+        playerHandValue = tempP1.at(0);
+        playerAceElevenCounter = tempP1.at(1);
+    }
+    if (AssignValue(playerSecondCard) == 11)
+    {
+        playerAceElevenCounter++;
+        vector<int> tempP2 = DetermineAceValue(playerHandValue, playerAceElevenCounter);
+        playerHandValue = tempP2.at(0);
+        playerAceElevenCounter = tempP2.at(1);
+    }
+
+    if (playerHandValue == 21 && dealerHandValue != 21)
+    {
+        cout << "The dealer's second card was " << dealerSecondCard << ".\n";
+        cout << "You win!" << endl;
+    }
+    else if (playerHandValue == 21 && dealerHandValue == 21)
+    {
+        cout << "The dealer's second card was " << dealerSecondCard << ".\n";
+        cout << "You tied." << endl;
+    }
+    int finalDealerValue;
+    int finalPlayerValue;
+
+    if (playerHandValue < 21)
+    {
+        finalPlayerValue = PlayerProtocol(playerHandValue);
+    }
+
+    if (dealerHandValue < 21)
+    {
+        finalDealerValue = DealerProtocol(dealerHandValue);
+        cout << "The dealer's second card was " << dealerSecondCard << ".\n";
+    }
+
+    Winner(finalDealerValue, finalPlayerValue);
 }
