@@ -13,7 +13,7 @@ int playerAceElevenCounter = 0;
 int dealerAceElevenCounter = 0;
 string PlayerDecision = "h";
 
-void ListOfCards()
+void CreateCardList()
 // function for creating a list of cards
 {
     vector<int> numberList{2, 3, 4, 5, 6, 7, 8, 9, 10};               // list of numbers in cards
@@ -197,7 +197,7 @@ void Winner(int dealerFinalValue, int playerFinalValue)
 
 int main()
 {
-    ListOfCards();
+    CreateCardList();
 
     string playerFirstCard = CardSelection();
 
@@ -290,7 +290,7 @@ int main()
     }
 
     if (dealerHandValue < 21)
-    {
+    {   
         finalDealerValue = DealerProtocol(dealerHandValue);
         cout << "The dealer's second card was " << dealerSecondCard << ".\n";
     }
