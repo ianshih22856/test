@@ -8,38 +8,41 @@
 #include <math.h>
 using namespace std;
 
-int main ()
+string ReverseString(string word)
 {
-    int codeSection;
-    if (codeSection == 281)
-        cout << "bigamy";
-    else if (codeSection == 321 || codeSection == 322)
-        cout << "selling illegal lottery tickets";
-    else if (codeSection == 383)
-        cout << "selling rancid butter";
-    else if (codeSection == 598)
-        cout << "injuring a bird in a public cemetery";
-    else
-        cout << "some other crime";
-
-    switch (codeSection)
+    string reverseWord = "";
+    int length = word.length();
+    for (int i = (length - 1); i >= 0; i--)
     {
-        case 281:
-            cout << "bigamy";
-            break;
-        case 321:
-            cout << "selling illegal lottery tickets";
-            break;
-        case 322:
-            cout << "selling illegal lottery tickets";
-            break;
-        case 383:
-            cout << "selling rancid butter";
-            break;
-        case 598:
-            cout << "injuring a bird in a public cemetery";
-            break;
-        default:
-            cout << "some other crime";
+        string letter(1, word.at(i));
+        reverseWord = reverseWord + letter;
     }
-}   
+    return reverseWord;
+}
+int main()
+{
+    string original;
+    cout << "input: " << endl;
+    getline(cin, original);
+    string userInput = original;
+
+    for (int i = 0; i < userInput.length(); i++)
+    {
+        string temp(1, userInput.at(i));
+        if (temp == " ")
+        {
+            userInput.replace(i, 1, "");
+        }
+    }
+    string reversedWord = ReverseString(userInput);
+    if (reversedWord == userInput)
+    {
+        cout << "palindrome: " << original << endl;
+    }
+    else
+    {
+        cout << "not a palindrome: " << original << endl;
+    }
+
+    return 0;
+}
