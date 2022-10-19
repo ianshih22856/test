@@ -10,21 +10,9 @@ using namespace std;
 
 string ReverseString(string word)
 {
-    string reverseWord = "";
-    int length = word.length();
-    for (int i = (length - 1); i >= 0; i--)
-    {
-        string letter(1, word.at(i));
-        reverseWord = reverseWord + letter;
-    }
-    return reverseWord;
-}
-int main()
-{
-    string original;
-    cout << "input: " << endl;
-    getline(cin, original);
-    string userInput = original;
+    int codeSection;
+    cout << "enter codesection: ";
+    cin >> codeSection;
 
     for (int i = 0; i < userInput.length(); i++)
     {
