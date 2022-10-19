@@ -14,6 +14,35 @@ bool isValidPollString(string pollData)
     {
         return false;
     }
+    // example: NY93D4F21g
+    int position = 2;
+    string letter = "";
+    while (position < pollData.length())
+    {
+        char x = pollData.at(position);
+        int xASCII = int(x);
+        if (xASCII >= 48 && xASCII <= 57)
+        {
+            if (position == (pollData.length() - 1))
+            {
+                return false;
+            }
+            letter = "";
+        }
+        else if (xASCII >= 65 && xASCII <= 90)
+        {
+            if (letter != "" || position == 2)
+            {
+                return false;
+            }
+            letter = string(1, x);
+        }
+        else
+        {
+            return false;
+        }
+        position++;
+    }
     return true;
 }
 int countSeats(string pollData, char party, int &seatCount)
@@ -33,7 +62,6 @@ int main()
     cout << "input: " << endl;
     getline(cin, test);
 
-    string partyCodeList[] = {};
     string newTest = ConvertToUppercase(test);
     bool code = isValidPollString(newTest);
     cout << code << endl;
