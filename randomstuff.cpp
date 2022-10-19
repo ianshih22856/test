@@ -11,16 +11,8 @@ using namespace std;
 int main ()
 {
     int codeSection;
-    if (codeSection == 281)
-        cout << "bigamy";
-    else if (codeSection == 321 || codeSection == 322)
-        cout << "selling illegal lottery tickets";
-    else if (codeSection == 383)
-        cout << "selling rancid butter";
-    else if (codeSection == 598)
-        cout << "injuring a bird in a public cemetery";
-    else
-        cout << "some other crime";
+    cout << "enter codesection: ";
+    cin >> codeSection;
 
     switch (codeSection)
     {
