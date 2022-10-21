@@ -153,6 +153,80 @@ int countSeats(string pollData, char party, int &seatCount)
     return 0;
 }
 
+void TestPollData(string pollData, bool expectedResult)
+{
+    bool actualResult = isValidPollString(pollData);
+    if (actualResult == expectedResult)
+    {
+        cout << pollData << " || success" << endl;
+    }
+    else
+    {
+        cout << pollData << " || FAIL ############" << endl;
+    }
+}
+
+void RunTestCases()
+{
+    TestPollData("NY8d8r91f", true);
+    TestPollData("NY8d8r91f,CA4d51r", true);
+    TestPollData("Ny 8d3f", false);
+    TestPollData("NY8d81r,CA4d51r,NV12R", true);
+    TestPollData("NY8d8r91f", true);
+    TestPollData("ct5d,ny9r17d1i", true);
+    TestPollData("NY$d", false);
+    TestPollData("NY9d12r", true);
+    TestPollData("5d,ny9d", false);
+    TestPollData("!NY4d", false);
+    TestPollData("NY9d31f", true);
+    TestPollData("ny9d3", false);
+}
+
+void TestCountSeats(string pollString, char party, int expRetValue, int expCount)
+{
+    int actCount;
+    int actRetVal = countSeats(pollString, party, actCount);
+    if(actRetVal > 0)
+    {
+        expCount = actCount;
+    }
+    if (actRetVal == expRetValue && actCount == expCount)
+    {
+        cout << pollString << " || success" << endl;
+    }
+    else
+    {
+        if (actRetVal != expRetValue)
+        {
+            cout << actRetVal << " || " << expRetValue << " || return value (act, exp) fail !!!!!!!!!!!!" << endl;
+        }
+        else
+        {
+            cout << actCount << " || " << expCount << " || count (act, exp) FAIL !!!!!!!!!!!!" << endl;
+        }
+    }
+}
+
+void RunCountSeats()
+{
+    TestCountSeats("NY8d8r91f", 'd', 0, 8);
+    TestCountSeats("NY8d8r91f,CA4d51r", 'd', 0, 12);
+    TestCountSeats("Ny 8d3f", 'd', 1, 0);
+    TestCountSeats("NY8d81r,CA4d51r,NV12R", 'R', 0, 144);
+    TestCountSeats("NY8d8r91f", 'F', 0, 91);
+    TestCountSeats("ct5d,ny9r17d1i", 'I', 0, 1);
+    TestCountSeats("NY$d", 'd', 1, 0);
+    TestCountSeats("NY9d12r", 'f', 0, 0);
+    TestCountSeats("5d,ny9d", 'D', 1, 0);
+    TestCountSeats("!NY4d", 'd', 1, 0);
+    TestCountSeats("NY9d31f", '$', 2, 0);
+    TestCountSeats("ny9d3", 'd', 1, 0);
+    TestCountSeats("ny1912d,ca421d", 'd', 0, 2333);
+}
+
 int main()
 {
+    RunTestCases();
+    cout << "--------------------------------------" << endl;
+    RunCountSeats();
 }
