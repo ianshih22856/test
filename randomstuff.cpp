@@ -8,7 +8,7 @@
 #include <math.h>
 using namespace std;
 
-int main ()
+string ReverseString(string word)
 {
     string codeSection;
     cout << "enter codesection: ";
@@ -16,5 +16,23 @@ int main ()
     int test = stoi(codeSection);
     cout << test << endl;
 
-    
-}   
+    for (int i = 0; i < userInput.length(); i++)
+    {
+        string temp(1, userInput.at(i));
+        if (temp == " ")
+        {
+            userInput.replace(i, 1, "");
+        }
+    }
+    string reversedWord = ReverseString(userInput);
+    if (reversedWord == userInput)
+    {
+        cout << "palindrome: " << original << endl;
+    }
+    else
+    {
+        cout << "not a palindrome: " << original << endl;
+    }
+
+    return 0;
+}
