@@ -6,33 +6,39 @@
 #include <algorithm>
 #include <bits/stdc++.h>
 #include <math.h>
+#include <cctype>
 using namespace std;
 
-string ReverseString(string word)
+string CreateAcronym(string userPhrase)
 {
-    string codeSection;
-    cout << "enter codesection: ";
-    getline(cin, codeSection);
-    int test = stoi(codeSection);
-    cout << test << endl;
-
-    for (int i = 0; i < userInput.length(); i++)
+    vector<string> acronymLetters;
+    if (isupper(userPhrase[0]))
     {
-        string temp(1, userInput.at(i));
-        if (temp == " ")
+        acronymLetters.push_back(string(1, userPhrase[0]));
+    }
+    for (int i = 1; i < userPhrase.size(); i++)
+    {
+        if (string(1, userPhrase[i]) == " " && isupper(userPhrase[i + 1]))
         {
-            userInput.replace(i, 1, "");
+            acronymLetters.push_back(string(1, userPhrase[i + 1]));
         }
     }
-    string reversedWord = ReverseString(userInput);
-    if (reversedWord == userInput)
-    {
-        cout << "palindrome: " << original << endl;
-    }
-    else
-    {
-        cout << "not a palindrome: " << original << endl;
-    }
 
-    return 0;
+    string acronym = "";
+    for (int j = 0; j < acronymLetters.size(); j++)
+    {
+        string letter = acronymLetters.at(j);
+        acronym = acronym + letter + ".";
+    }
+    return acronym;
+}
+
+int main()
+{
+    string name;
+    cout << "enter phrase: " << endl;
+    getline(cin, name);
+
+    string acronym = CreateAcronym(name);
+    cout << acronym << endl;
 }
