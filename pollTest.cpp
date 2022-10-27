@@ -229,6 +229,8 @@ void RunCountSeats()
     TestCountSeats("NY8d81r, Ca4d51r, nv12r", 'R', 1, 0);
     TestCountSeats("NY9d3rCA8d4r", 'R', 1, 0);
     TestCountSeats("", 'd', 0, 0);
+    TestCountSeats("ny4s", ' ', 2, 0);
+    TestCountSeats("NY,", 'd', 1, 0);
 }
 
 int main()
