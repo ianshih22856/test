@@ -12,7 +12,7 @@ string ConvertToUppercase(string convert)
     return convert;
 }
 
-// Split poll data into poll data segments for each state. 
+// Split poll data into poll data segments for each state.
 vector<string> SplitPollData(string pollData)
 {
     int endPosition = pollData.find(",");
@@ -43,7 +43,7 @@ bool IsValidStatePollString(string statePollString)
 {
 
     vector<string> stateCodeList{"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MA", "MD", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"};
-    
+
     statePollString = ConvertToUppercase(statePollString);
     string stateCode = statePollString.substr(0, 2);
     vector<string>::iterator it;
@@ -90,9 +90,13 @@ bool IsValidStatePollString(string statePollString)
     return true;
 }
 
-//Determine if poll data is valid
+// Determine if poll data is valid
 bool isValidPollString(string pollData)
 {
+    if (pollData == "")
+    {
+        return true;
+    }
     vector<string> statePollStrings = SplitPollData(pollData);
 
     for (int i = 0; i < statePollStrings.size(); i++)
@@ -131,12 +135,12 @@ int countSeats(string pollData, char party, int &seatCount)
         string stateString = pollStrings.at(i);
         int partyPosition = stateString.find(uppercaseParty);
 
-        // Checks if party is found. 
+        // Checks if party is found.
         if (partyPosition < 0)
         {
             continue;
         }
-        // Scans string for number after finding party. 
+        // Scans string for number after finding party.
         // Starts two places to the left of the party character because the string is valid.
         // Scans numbers to the left until it hits a letter.
         int currentPosition = partyPosition - 2;

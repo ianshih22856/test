@@ -93,6 +93,10 @@ bool IsValidStatePollString(string statePollString)
 //Determine if poll data is valid
 bool isValidPollString(string pollData)
 {
+    if(pollData == "")
+    {
+        return true;
+    }
     vector<string> statePollStrings = SplitPollData(pollData);
 
     for (int i = 0; i < statePollStrings.size(); i++)
@@ -214,7 +218,7 @@ void RunCountSeats()
     TestCountSeats("Ny 8d3f", 'd', 1, 0);
     TestCountSeats("NY8d81r,CA4d51r,NV12R", 'R', 0, 144);
     TestCountSeats("NY8d8r91f", 'F', 0, 91);
-    TestCountSeats("ct5d,ny9r17d1i", 'I', 0, 1);
+    TestCountSeats("ct5d,ny9r17d", 'I', 0, 0);
     TestCountSeats("NY$d", 'd', 1, 0);
     TestCountSeats("NY9d12r", 'f', 0, 0);
     TestCountSeats("5d,ny9d", 'D', 1, 0);
@@ -222,6 +226,9 @@ void RunCountSeats()
     TestCountSeats("NY9d31f", '$', 2, 0);
     TestCountSeats("ny9d3", 'd', 1, 0); 
     TestCountSeats("ny1912d,ca421d", 'd', 0, 2333);
+    TestCountSeats("NY8d81r, Ca4d51r, nv12r", 'R', 1, 0);
+    TestCountSeats("NY9d3rCA8d4r", 'R', 1, 0);
+    TestCountSeats("", 'd', 0, 0);
 }
 
 int main()
