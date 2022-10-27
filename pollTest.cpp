@@ -220,7 +220,7 @@ void RunCountSeats()
     TestCountSeats("5d,ny9d", 'D', 1, 0);
     TestCountSeats("!NY4d", 'd', 1, 0);
     TestCountSeats("NY9d31f", '$', 2, 0);
-    TestCountSeats("ny9d3", 'd', 1, 0);
+    TestCountSeats("ny9d3", 'd', 1, 0); 
     TestCountSeats("ny1912d,ca421d", 'd', 0, 2333);
 }
 

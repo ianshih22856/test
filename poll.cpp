@@ -136,7 +136,6 @@ int countSeats(string pollData, char party, int &seatCount)
         {
             continue;
         }
-
         // Scans string for number after finding party. 
         // Starts two places to the left of the party character because the string is valid.
         // Scans numbers to the left until it hits a letter.
