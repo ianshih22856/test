@@ -2,8 +2,15 @@
 
 using namespace std;
 
+void helloworld(int x)
+{
+
+    cout << "hello world!" << x << endl;
+}
 int main()
 {
-    cout << "hello world!" << endl;
-    return 0;
+    for (int i = 0; i < 10; i++)
+    {
+        helloworld(i);
+    }
 }
