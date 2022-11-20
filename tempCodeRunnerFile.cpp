@@ -1,1 +1,2 @@
-5
+
+        cout << "They're the same person!\n";

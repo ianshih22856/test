@@ -1,35 +1,40 @@
 #include <iostream>
 using namespace std;
 
-void findMax(int arr[], int n, int* pToMax)
+// return true if two C strings are equal
+bool strequal(const char str1[], const char str2[])
 {
-    int temp;
-    pToMax = &temp;
-    if (n <= 0)
-        return; // no items, no maximum!
-        
-    // cout << pToMax << endl;
-    // temp += 2;
-    // cout << temp << endl;
-    for (int i = 1; i < n; i++)
+    int n = 0;
+    
+    while (str1 != 0 && str2 != 0) // zero bytes at ends
     {
-        if (arr[i] > *pToMax)
+        if (*str1 != *str2) // compare corresponding characters
+            {
+                cout << "false" << endl;
+                return false;
+            }
+        else
         {
-            *pToMax = arr[i];
-            temp += i;
-            cout << pToMax << endl;
+            n++;
+            // cout << n << endl;
         }
+        str1++; // advance to the next character
+        str2++;
     }
+    return str1 == str2; // both ended at same time?
 }
 
 int main()
 {
-    int nums[4] = {5, 3, 15, 6};
-    int *ptr = &nums[0];
-    findMax(nums, 4, ptr);
-    cout << &nums[0] << endl;
-    cout << &nums[2] << endl;
-    cout << "The maximum is at address " << ptr << endl;
-    cout << "It's at position " << ptr - nums << endl;
-    cout << "Its value is " << *ptr << endl;
+    char a[15] = "Zhang";
+    char b[15] = "Zhang";
+    cout << "|" << a[15] << "__" << endl;
+
+    if (strequal(a, b))
+        cout << "They're the same person!\n";
+    else
+    {
+        cout << "no";
+    } 
+    
 }
