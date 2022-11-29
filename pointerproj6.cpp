@@ -8,26 +8,19 @@ using namespace std;
 // that additional variable must be of a pointer type.
 // Your function must not use any square brackets and must not use any of the<cstring> functions such as strlen, strcpy, etc.
 
-void removeS(char *ptr)
-{
-    char *temp = ptr;
-    while (*ptr != '\0')
-    {
-        if (*ptr == 'S' || *ptr == 's')
-        {
-            ptr++;
-            continue;
-        }
-        *temp = *ptr;
-        temp++;
-        ptr++;
-    }
-    *temp = '\0';
-}
-
 int main()
 {
-    char msg[50] = "She'll shave a massless princess.";
-    removeS(msg);
-    cout << msg; 
+    int arr[3] = {5, 10, 15};
+    int *ptr = arr;
+
+    *ptr = 10;       // set arr[0] to 10
+    *(ptr + 1) = 20;  // set arr[1] to 20
+    ptr += 2;
+    ptr[0] = 30; // set arr[2] to 30
+
+    while (ptr >= arr)
+    {
+        cout << *ptr << endl; // print values
+        ptr--;
+    }
 }
