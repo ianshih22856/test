@@ -1,33 +1,40 @@
 #include <iostream>
 using namespace std;
 
-// Write a function named removeS that accepts one character pointer as a parameter and returns no value.
-// The parameter is a C string.This function must remove all of the upper and lower case 's' letters from the string.
-// The resulting string must be a valid C string.
-// Your function must declare no more than one local variable in addition to the parameter;
-// that additional variable must be of a pointer type.
-// Your function must not use any square brackets and must not use any of the<cstring> functions such as strlen, strcpy, etc.
-
-void removeS(char *ptr)
+// return true if two C strings are equal
+bool strequal(const char str1[], const char str2[])
 {
-    char *temp = ptr;
-    while (*ptr != '\0')
+    int n = 0;
+    
+    while (str1 != 0 && str2 != 0) // zero bytes at ends
     {
-        if (*ptr == 'S' || *ptr == 's')
+        if (*str1 != *str2) // compare corresponding characters
+            {
+                cout << "false" << endl;
+                return false;
+            }
+        else
         {
-            ptr++;
-            continue;
+            n++;
+            // cout << n << endl;
         }
-        *temp = *ptr;
-        temp++;
-        ptr++;
+        str1++; // advance to the next character
+        str2++;
     }
-    *temp = '\0';
+    return str1 == str2; // both ended at same time?
 }
 
 int main()
 {
-    char msg[50] = "She'll shave a massless princess.";
-    removeS(msg);
-    cout << msg; 
+    char a[15] = "Zhang";
+    char b[15] = "Zhang";
+    cout << "|" << a[15] << "__" << endl;
+
+    if (strequal(a, b))
+        cout << "They're the same person!\n";
+    else
+    {
+        cout << "no";
+    } 
+    
 }
